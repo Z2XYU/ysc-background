@@ -1,0 +1,7 @@
+*.class
+*.xml
+*.yml
+
+target/
+
+src/main/java/com/ysc/utils/TencentCOSUtil.java
