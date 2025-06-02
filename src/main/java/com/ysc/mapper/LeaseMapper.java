@@ -36,7 +36,7 @@ public interface LeaseMapper {
     @Update("update Lease set lease_statue=1 ,return_time=#{returnTime} where hanfu_id=#{hanFuId} and user_id=#{userId}")
     void completeOrder(int userId, int hanFuId, LocalDateTime returnTime);
 
-    @Select("select location from cabinet_space where hanfu_id is null")
+    @Select("select location from cabinet_space where hanfu_id is null and  cabinet_id=#{siteId}")
     List<Integer> selectVacantLocation(Integer siteId);
 
     @Update("update cabinet_space set hanfu_id=null  where hanfu_id=#{hanFuId} and cabinet_id=#{siteId}")
