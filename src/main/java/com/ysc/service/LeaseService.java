@@ -1,5 +1,6 @@
 package com.ysc.service;
 
+import com.ysc.pojo.Appointment;
 import com.ysc.pojo.LeaseDetail;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +19,11 @@ public interface LeaseService {
 //    Integer returnHanFu(Integer hanFuId, Integer siteId);
 
     Map<String, Object> CompleteTheOrder(int userId, int hanFuId, Integer siteId);
+
+    Appointment searchDeliveryCode(Integer siteId, String deliveryCode);
+
+    Appointment searchPickCode(Integer siteId, String pickUpCode);
+
+
+    void createAppointment(Integer siteId, Integer hanFuId);
 }

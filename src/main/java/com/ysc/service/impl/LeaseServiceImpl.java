@@ -4,6 +4,7 @@ package com.ysc.service.impl;
 import com.ysc.mapper.HomeMapper;
 import com.ysc.mapper.LeaseMapper;
 
+import com.ysc.pojo.Appointment;
 import com.ysc.pojo.HanFu;
 import com.ysc.pojo.LeaseDetail;
 import com.ysc.service.LeaseService;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class LeaseServiceImpl implements LeaseService {
@@ -70,5 +72,25 @@ public class LeaseServiceImpl implements LeaseService {
         result.put("totalCost", totalCost);
         result.put("location", location);
         return result;
+    }
+
+    @Override
+    public Appointment searchDeliveryCode(Integer siteId, String deliveryCode) {
+        return leaseMapper.selectDeliverCode(siteId,deliveryCode);
+    }
+
+    @Override
+    public Appointment searchPickCode(Integer siteId, String pickUpCode) {
+        return leaseMapper.selectPickCode(siteId,pickUpCode);
+    }
+
+    @Override
+    public void createAppointment(Integer siteId, Integer hanFuId) {
+        Random random = new Random();
+        // 生成两个6位随机数字字符串（范围：000000 ~ 999999）
+        String pickCode = String.format("%06d", random.nextInt(1000000));
+        String deliveryCode = String.format("%06d", random.nextInt(1000000));
+
+        leaseMapper.insertAppointment(siteId,hanFuId,pickCode,deliveryCode);
     }
 }

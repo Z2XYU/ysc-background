@@ -1,5 +1,6 @@
 package com.ysc.mapper;
 
+import com.ysc.pojo.Appointment;
 import com.ysc.pojo.LeaseDetail;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -44,4 +45,13 @@ public interface LeaseMapper {
 
     @Update("update cabinet_space set hanfu_id=#{hanFuId} where cabinet_id=#{siteId} and location=#{location}")
     void updateCabinetSpace(int hanFuId, Integer siteId, Integer location);
+
+    @Select("SELECT * FROM appointment WHERE cabinet_id = #{siteId} AND delivery_code = #{deliveryCode}")
+    Appointment selectDeliverCode(Integer siteId, String deliveryCode);
+    @Select("SELECT * FROM appointment WHERE cabinet_id = #{siteId} AND pickup_code = #{pickUpCode}")
+    Appointment selectPickCode(Integer siteId, String pickUpCode);
+
+    @Insert("INSERT INTO appointment (cabinet_id, hanfu_id, pickup_code, delivery_code) " +
+            "VALUES (#{siteId}, #{hanFuId}, #{pickCode}, #{deliveryCode})")
+    void insertAppointment(Integer siteId, Integer hanFuId, String pickCode, String deliveryCode);
 }

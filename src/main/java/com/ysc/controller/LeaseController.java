@@ -1,5 +1,6 @@
 package com.ysc.controller;
 
+import com.ysc.pojo.Appointment;
 import com.ysc.pojo.LeaseDetail;
 import com.ysc.pojo.Result;
 import com.ysc.service.LeaseService;
@@ -52,5 +53,25 @@ public class LeaseController {
         int userId= leaseDetail.getUserId();
         Map<String, Object> totalCostAndLocation=leaseService.CompleteTheOrder(userId,hanFuId,siteId);
         return Result.success(totalCostAndLocation);
+    }
+
+    @PostMapping("/appointmentOrder")
+    public  Result addAppointmentOrder( @RequestParam Integer siteId,
+                                        @RequestParam Integer hanFuId){
+        leaseService.createAppointment(siteId,hanFuId);
+        return  Result.success();
+    }
+
+
+    @GetMapping("/appointmentDeliveryOrders/{siteId}")
+    public Result findDeliveryCode(@PathVariable Integer siteId,String deliveryCode){
+        Appointment result = leaseService.searchDeliveryCode(siteId,deliveryCode);
+        return Result.success(result);
+    }
+
+    @GetMapping("/appointmentPickUpOrders/{siteId}")
+    public Result findPickCode(@PathVariable Integer siteId,String pickUpCode){
+        Appointment result = leaseService.searchPickCode(siteId,pickUpCode);
+        return Result.success(result);
     }
 }
